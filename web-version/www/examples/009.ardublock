@@ -1,0 +1,115 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="]/yoV,?S=9(%/WoPp`Un" x="45" y="126">
+    <statement name="MySetup">
+      <block type="variables_set_init" id="Y1v/:Nr~xE^KGq{/rM5(">
+        <field name="VAR">W</field>
+        <field name="VARIABLE_SETTYPE_TYPE">LARGE_NUMBER</field>
+        <value name="VALUE">
+          <block type="math_number" id="wzHp0^9Ebh#Wm!fcr2t3">
+            <field name="NUM">2</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="MyLoop">
+      <block type="inout_digital_writeD" id="=Ae.BlP5(NEIRrQqX|Z{">
+        <field name="OUTPUT_VALUE">1</field>
+        <field name="STAT">1</field>
+        <value name="PIN">
+          <shadow type="math_number" id="GghAE)v*/C-NR@P[O!=K">
+            <field name="NUM">13</field>
+          </shadow>
+          <block type="variables_get" id="L.T1Ek$CSZ^PZWXo-fR,">
+            <field name="VAR">W</field>
+          </block>
+        </value>
+        <next>
+          <block type="base_delay" id="[?An2|$1SYsir~zKBPAu">
+            <field name="unite">m</field>
+            <value name="DELAY_TIME">
+              <shadow type="math_number" id="Gg=QVEUz#((BJgm?Fe/(">
+                <field name="NUM">500</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="inout_digital_writeD" id="V,0scp`@=J}.`r[$J}aG">
+                <field name="OUTPUT_VALUE">1</field>
+                <field name="STAT">0</field>
+                <value name="PIN">
+                  <shadow type="math_number" id="GghAE)v*/C-NR@P[O!=K">
+                    <field name="NUM">13</field>
+                  </shadow>
+                  <block type="variables_get" id="eVV9s[C{`11i|n5fY0f[">
+                    <field name="VAR">W</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="variables_set" id="s+#_Vt-15RdV(Q=5r.aT">
+                    <field name="VAR">W</field>
+                    <value name="VALUE">
+                      <block type="math_arithmetic" id="_S_@e@~d]Z,O=627Lr~^">
+                        <field name="OP">ADD</field>
+                        <value name="A">
+                          <shadow type="math_number" id="As=ZZc_D3Z0*a9Lc/$S}">
+                            <field name="NUM">R</field>
+                          </shadow>
+                          <block type="variables_get" id="79/pNrS@[ug7=2%T),Gg">
+                            <field name="VAR">W</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <shadow type="math_number" id="W@y]G,|l.]8yo(?scj]=">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="math_number" id="g,[9m}HIHA5$C0kb=d_k">
+                            <field name="NUM">1</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <next>
+                      <block type="controls_if" id="RaP]!F);V::[@0:@-f|z">
+                        <value name="IF0">
+                          <block type="logic_compare_log" id="xP9{W5glt~to^(FQioJY">
+                            <field name="OP">EQ</field>
+                            <value name="A">
+                              <shadow type="math_number" id="P)WW1bYKfSdZiR~X6bs7">
+                                <field name="NUM">R</field>
+                              </shadow>
+                              <block type="variables_get" id="@:BJ__ACukD$hyUp^9sS">
+                                <field name="VAR">W</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <shadow type="math_number" id="c5]EY`%H|05lW_++uyYn">
+                                <field name="NUM">10</field>
+                              </shadow>
+                              <block type="math_number" id="d#xKQX;Ii.RQJ80|kq2L">
+                                <field name="NUM">8</field>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                        <statement name="DO0">
+                          <block type="variables_set" id="az|F}Dj;SHUqh2~]2z||">
+                            <field name="VAR">W</field>
+                            <value name="VALUE">
+                              <block type="math_number" id="p(f_Ny#4OI+@@p11}!m6">
+                                <field name="NUM">2</field>
+                              </block>
+                            </value>
+                          </block>
+                        </statement>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

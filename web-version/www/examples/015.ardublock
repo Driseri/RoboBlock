@@ -1,0 +1,78 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="0(*StZ|Iy:+S#K@SXg{W" x="272" y="222">
+    <statement name="MySetup">
+      <block type="variables_set_init" id="Em=dYzq[{/?2hYzs8(4L">
+        <field name="VAR">W</field>
+        <field name="VARIABLE_SETTYPE_TYPE">LARGE_NUMBER</field>
+        <value name="VALUE">
+          <block type="math_number" id="-VV%p^TAJ4Lzq;U?V$r+">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="MyLoop">
+      <block type="variables_set" id="Ozbp:4+g*$V?o?@}IxDm">
+        <field name="VAR">W</field>
+        <value name="VALUE">
+          <block type="inout_analog_readR" id="mA[b3|pTNcxnqtqNRvLQ" inline="false">
+            <field name="NUMBER">1</field>
+            <field name="broche">A0</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="B.U`S|Y:)oLa(*|]mrSn">
+            <field name="VAR">W</field>
+            <value name="VALUE">
+              <block type="math_random_int_map" id="9vJyu!=Db)fUJIO`R2b2" inline="false">
+                <value name="Mi1">
+                  <shadow type="math_number" id=",^C-jl,n)5.q`u1bv-CM">
+                    <field name="NUM">R</field>
+                  </shadow>
+                  <block type="variables_get" id="vZ=E?=RweZmWT=^s/`B7">
+                    <field name="VAR">W</field>
+                  </block>
+                </value>
+                <value name="Mi2">
+                  <shadow type="math_number" id="!/(*g93x#);d(H==nn:N">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <value name="Mi3">
+                  <shadow type="math_number" id="_LLc?$$j:A4ciEc^l(zX">
+                    <field name="NUM">1023</field>
+                  </shadow>
+                </value>
+                <value name="Mi4">
+                  <shadow type="math_number" id="*tu!CI)4B!2rEon37Aw9">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <value name="Mi5">
+                  <shadow type="math_number" id="n,SrudgWZH[:w6X^1!;=">
+                    <field name="NUM">255</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="inout_analog_writeD" id="!z=lo.3.iKDZRY$uK@c?">
+                <field name="OUTPUT_VALUE">3</field>
+                <field name="broche">9</field>
+                <value name="NUM">
+                  <shadow type="math_number" id="aL@%K2O+)o5@*Z(y*^5~">
+                    <field name="NUM">255</field>
+                  </shadow>
+                  <block type="variables_get" id=":Bwy[O-gi?Gs*OB%G$8H">
+                    <field name="VAR">W</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

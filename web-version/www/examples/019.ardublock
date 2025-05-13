@@ -1,0 +1,97 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="l[whdywG^ccHG[;@3]g-" x="138" y="63">
+    <statement name="MyLoop">
+      <block type="controls_if" id="$rvhVKQZp|H}f8NK?KxG">
+        <value name="IF0">
+          <block type="logic_compare_log" id="RZ5Nu(uD0R83er(og3ez">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <shadow type="math_number" id="j??1Zmf;9koF:GS9fChM">
+                <field name="NUM">R</field>
+              </shadow>
+              <block type="digital_readbiR" id="j0;D!os9,6UQ?)fE:8PN">
+                <field name="NUMBER">1</field>
+                <value name="PIN">
+                  <shadow type="math_number" id="q-o,`xH!TiH1(f_4xlj_">
+                    <field name="NUM">2</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <shadow type="math_number" id="TK/6ukB]^rel*1`xOJS5">
+                <field name="NUM">0</field>
+              </shadow>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="stepservo_continuos_move" id="#B:)AhEKhk6FDiTSFJo{">
+            <value name="PIN">
+              <shadow type="math_number" id="xk(T;~0S6H7wzGarWgjj">
+                <field name="NUM">4</field>
+              </shadow>
+            </value>
+            <value name="PIN_GR">
+              <shadow type="math_number" id="Yvo_zHKUW`R0Qema4|h8">
+                <field name="NUM">255</field>
+              </shadow>
+            </value>
+            <value name="SpeedServo">
+              <shadow type="math_number" id="IxLi]/d7JH`[mH~ou+pX">
+                <field name="NUM">10</field>
+              </shadow>
+            </value>
+          </block>
+        </statement>
+        <next>
+          <block type="controls_if" id="DVlT$tMR8af?NhoJ@gWs">
+            <value name="IF0">
+              <block type="logic_compare_log" id="p(Al!)R$n-Lk`97-9f6V">
+                <field name="OP">EQ</field>
+                <value name="A">
+                  <shadow type="math_number" id="j??1Zmf;9koF:GS9fChM">
+                    <field name="NUM">R</field>
+                  </shadow>
+                  <block type="digital_readbiR" id="e2+3jZ*Kfr9pD`,U-ryq">
+                    <field name="NUMBER">1</field>
+                    <value name="PIN">
+                      <shadow type="math_number" id="?!J/m-VS9xf.mc)pNb-n">
+                        <field name="NUM">3</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+                <value name="B">
+                  <shadow type="math_number" id="AOcb#]AlLoDM8*sCKVnZ">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <statement name="DO0">
+              <block type="stepservo_continuos_move" id="R0uJF0,6{yRF${|CM6ro">
+                <value name="PIN">
+                  <shadow type="math_number" id="/wV#tS/|TyuK80rzQ|~A">
+                    <field name="NUM">4</field>
+                  </shadow>
+                </value>
+                <value name="PIN_GR">
+                  <shadow type="math_number" id="j3/5~{K.YVSZ^-.TS_Ab">
+                    <field name="NUM">255</field>
+                  </shadow>
+                </value>
+                <value name="SpeedServo">
+                  <shadow type="math_number" id="n_KpoLMzVMhom^lZBmf^">
+                    <field name="NUM">170</field>
+                  </shadow>
+                </value>
+              </block>
+            </statement>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

@@ -1,0 +1,92 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="l[whdywG^ccHG[;@3]g-" x="138" y="63">
+    <statement name="MySetup">
+      <block type="variables_set_init" id="Yr`N[MhCHZ?n?kuR=Blv">
+        <field name="VAR">W</field>
+        <field name="VARIABLE_SETTYPE_TYPE">LARGE_NUMBER</field>
+        <value name="VALUE">
+          <block type="math_number" id="%dnpmyc*=V13XFxe/B7h">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+    <statement name="MyLoop">
+      <block type="variables_set" id="$=iDCn$trL!/uiRc/vav">
+        <field name="VAR">W</field>
+        <value name="VALUE">
+          <block type="inout_analog_readR" id="W=}.=ZjrS4?ixaR5EMI@" inline="false">
+            <field name="NUMBER">1</field>
+            <field name="broche">A0</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="hQM7q(X/c($vnLw~E4ZC">
+            <field name="VAR">W</field>
+            <value name="VALUE">
+              <block type="math_random_int_map" id="hwyro6(QyYXKbi+Q}PFC" inline="false">
+                <value name="Mi1">
+                  <shadow type="math_number" id="t/`^}q--,s-3(xG()M|V">
+                    <field name="NUM">R</field>
+                  </shadow>
+                  <block type="variables_get" id="$|4ZGec,9AZTH]T#eW@m">
+                    <field name="VAR">W</field>
+                  </block>
+                </value>
+                <value name="Mi2">
+                  <shadow type="math_number" id="|YH??{P$BEC%k%ed-BuM">
+                    <field name="NUM">0</field>
+                  </shadow>
+                </value>
+                <value name="Mi3">
+                  <shadow type="math_number" id="GH3awKTf_jN/4Xu8mcBF">
+                    <field name="NUM">1023</field>
+                  </shadow>
+                </value>
+                <value name="Mi4">
+                  <shadow type="math_number" id="zsj,@$$gQ8XTYPo!jz24">
+                    <field name="NUM">0</field>
+                  </shadow>
+                  <block type="inout_angle_maths" id="(]1%R9@fm|E#bF0{hiVh">
+                    <field name="ANGLE">0</field>
+                  </block>
+                </value>
+                <value name="Mi5">
+                  <shadow type="math_number" id="U~1mK9zuA$/:X`WO/CMC">
+                    <field name="NUM">180</field>
+                  </shadow>
+                  <block type="inout_angle_maths" id="KpGM}sp1uq1N+9TA|^#]">
+                    <field name="ANGLE">180</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="stepservo_continuos_move" id="R0uJF0,6{yRF${|CM6ro">
+                <value name="PIN">
+                  <shadow type="math_number" id="/wV#tS/|TyuK80rzQ|~A">
+                    <field name="NUM">4</field>
+                  </shadow>
+                </value>
+                <value name="PIN_GR">
+                  <shadow type="math_number" id="j3/5~{K.YVSZ^-.TS_Ab">
+                    <field name="NUM">255</field>
+                  </shadow>
+                </value>
+                <value name="SpeedServo">
+                  <shadow type="math_number" id="n_KpoLMzVMhom^lZBmf^">
+                    <field name="NUM">170</field>
+                  </shadow>
+                  <block type="variables_get" id="oVcgyM^C4L7#PJZ$UIX5">
+                    <field name="VAR">W</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

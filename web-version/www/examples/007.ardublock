@@ -1,0 +1,90 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="9)Y7x9^I~%gqHJ@gL-)J" x="92" y="105">
+    <statement name="MySetup">
+      <block type="variables_set_init" id="h4J)!D_KrR)$dM,%7%6f">
+        <field name="VAR">W</field>
+        <field name="VARIABLE_SETTYPE_TYPE">LARGE_NUMBER</field>
+        <value name="VALUE">
+          <block type="math_number" id=";d#Wz2D!dI9G]U9x:B4(">
+            <field name="NUM">0</field>
+          </block>
+        </value>
+        <next>
+          <block type="serial_init" id="g}3C3a-ssp!}PEJ!]iEO">
+            <field name="pin">0</field>
+            <field name="SPEED">9600</field>
+          </block>
+        </next>
+      </block>
+    </statement>
+    <statement name="MyLoop">
+      <block type="variables_set" id="=U6TIpcpEKY$cR{wK;+U">
+        <field name="VAR">W</field>
+        <value name="VALUE">
+          <block type="inout_analog_readR" id="IWE%j6eF^S16[5_bZx*N">
+            <field name="NUMBER">3</field>
+            <field name="broche">A0</field>
+          </block>
+        </value>
+        <next>
+          <block type="serial_write_ln" id="Q*A9Ty+|Nm;`kCK^:LiL">
+            <value name="CONTENT">
+              <shadow type="text" id=",JHq;faUluJxw%D9c!DG">
+                <field name="TEXT">ArduBlock</field>
+              </shadow>
+              <block type="variables_get" id="umjDG|-6%,[RHkCfhl*5">
+                <field name="VAR">W</field>
+              </block>
+            </value>
+            <next>
+              <block type="controls_if" id="!b.TuHoo@3%^9R=f3s|x">
+                <mutation else="1"></mutation>
+                <value name="IF0">
+                  <block type="logic_compare_log" id="NEhd70e}ql?T`p6qwkzB">
+                    <field name="OP">GT</field>
+                    <value name="A">
+                      <shadow type="math_number" id="g1-t-}=Pm}A3(_W(~pR7">
+                        <field name="NUM">R</field>
+                      </shadow>
+                      <block type="variables_get" id="p~{K*9lgb@_f!P+:FO+!">
+                        <field name="VAR">W</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <shadow type="math_number" id=":ePHfrb^U34`3!GE3@(A">
+                        <field name="NUM">250</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+                <statement name="DO0">
+                  <block type="inout_digital_writeD" id="$c6pWa!IdixnO#fI@XhC">
+                    <field name="OUTPUT_VALUE">1</field>
+                    <field name="STAT">0</field>
+                    <value name="PIN">
+                      <shadow type="math_number" id="=1fc/R1H~vsccKEL/wjz">
+                        <field name="NUM">7</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </statement>
+                <statement name="ELSE">
+                  <block type="inout_digital_writeD" id="DnL9q;25tcZkItX(XdDZ">
+                    <field name="OUTPUT_VALUE">1</field>
+                    <field name="STAT">1</field>
+                    <value name="PIN">
+                      <shadow type="math_number" id="EomVH/C]C^5L{nY%0Vlw">
+                        <field name="NUM">7</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </statement>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

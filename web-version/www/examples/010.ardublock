@@ -1,0 +1,136 @@
+<xml xmlns="http://www.w3.org/1999/xhtml">
+  <toolbox>toolbox_arduino_all</toolbox>
+  <block type="arduino_setup" id="]/yoV,?S=9(%/WoPp`Un" x="45" y="126">
+    <statement name="MyLoop">
+      <block type="controls_if" id="RaP]!F);V::[@0:@-f|z">
+        <value name="IF0">
+          <block type="logic_compare_log" id="xP9{W5glt~to^(FQioJY">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <shadow type="math_number" id="P)WW1bYKfSdZiR~X6bs7">
+                <field name="NUM">R</field>
+              </shadow>
+              <block type="digital_readbiR" id="Vp?J7z@j~5-XU0i4xKV_">
+                <field name="NUMBER">1</field>
+                <value name="PIN">
+                  <shadow type="math_number" id="n6JjeyaWajnhYz$0pdLH">
+                    <field name="NUM">2</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <value name="B">
+              <shadow type="math_number" id="c5]EY`%H|05lW_++uyYn">
+                <field name="NUM">10</field>
+              </shadow>
+              <block type="math_number" id="d#xKQX;Ii.RQJ80|kq2L">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="base_define_for" id="_m.{etURxD7!8V[xD_?N">
+            <value name="variable">
+              <shadow type="math_number" id="nCL(7F!,;M`_gY[L}SyE">
+                <field name="NUM">3</field>
+              </shadow>
+            </value>
+            <statement name="DO">
+              <block type="actuator_tonedure" id="PPObNhPM0.%TJ[%[gl4F">
+                <value name="PIN">
+                  <shadow type="math_number" id="{iuuf|N-jA#f+|V~rBoz">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+                <value name="NUM">
+                  <shadow type="math_number" id="Wh$:9!7k!Q3F}Dag}cif">
+                    <field name="NUM">440</field>
+                  </shadow>
+                  <block type="frequency" id=";hTo$knxYM@n=/B]U55`" inline="false">
+                    <field name="NOTE">C</field>
+                    <field name="OCTAVE">4</field>
+                  </block>
+                </value>
+                <value name="DUR">
+                  <shadow type="math_number" id="l1Dbh}KUXEJmqodhfA!}">
+                    <field name="NUM">300</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="actuator_tonedure" id="h-~O{(+QD,(]@lf#.!Q+">
+                    <value name="PIN">
+                      <shadow type="math_number" id="i=?oYu88Ro4hM=8Yj/QY">
+                        <field name="NUM">3</field>
+                      </shadow>
+                    </value>
+                    <value name="NUM">
+                      <shadow type="math_number" id="4J;I%{0LoVuaBtoc3M2@">
+                        <field name="NUM">440</field>
+                      </shadow>
+                      <block type="frequency" id="`mkBf6ybH!VCobsOcs}P" inline="false">
+                        <field name="NOTE">D</field>
+                        <field name="OCTAVE">4</field>
+                      </block>
+                    </value>
+                    <value name="DUR">
+                      <shadow type="math_number" id="V**R4Cu!LZ)I$]__(jtR">
+                        <field name="NUM">300</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="actuator_tonedure" id="C8Qj!$Ghub!f/)*KLSnR">
+                        <value name="PIN">
+                          <shadow type="math_number" id="K_[uf@^R4ER[E2n)D@gv">
+                            <field name="NUM">3</field>
+                          </shadow>
+                        </value>
+                        <value name="NUM">
+                          <shadow type="math_number" id="4J;I%{0LoVuaBtoc3M2@">
+                            <field name="NUM">440</field>
+                          </shadow>
+                          <block type="frequency" id="X@6J/r(TA4u:N.m]jUmH" inline="false">
+                            <field name="NOTE">E</field>
+                            <field name="OCTAVE">4</field>
+                          </block>
+                        </value>
+                        <value name="DUR">
+                          <shadow type="math_number" id="qBpV2-vI7pAr,u?R`BFL">
+                            <field name="NUM">300</field>
+                          </shadow>
+                        </value>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </statement>
+            <next>
+              <block type="actuator_tonedure" id="I(.S{c%5{|(LvkT5@nn9">
+                <value name="PIN">
+                  <shadow type="math_number" id="q$[X6ILFICKq`fY0)}u^">
+                    <field name="NUM">3</field>
+                  </shadow>
+                </value>
+                <value name="NUM">
+                  <shadow type="math_number" id="Wh$:9!7k!Q3F}Dag}cif">
+                    <field name="NUM">440</field>
+                  </shadow>
+                  <block type="frequency" id="g,yOv-C*TYFk{m(5c;6W" inline="false">
+                    <field name="NOTE">C</field>
+                    <field name="OCTAVE">3</field>
+                  </block>
+                </value>
+                <value name="DUR">
+                  <shadow type="math_number" id="S]hUZ$($U,BRFG.RDMw;">
+                    <field name="NUM">300</field>
+                  </shadow>
+                </value>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>

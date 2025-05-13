@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Цифровой вход</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.3.3.6.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/blocklino.css"/>
+</head>
+<body>
+	 <div style="background-image: url(fone.png);border:1px solid #777;height:600px;width:800px;margin:0 auto;background-size: cover;">
+        
+        <div id="title-bar-btns">
+			<button type="button" class="close" style="padding:2px 10px;" id="btn_quit" type="button" class="btn btn-quitBlue" onclick="cancel()"><span aria-hidden="true">&#215;</span></button>
+        </div>
+	
+		
+	<h1 style="padding:0 0 10px 30px;">Входы / Входы - Цифровой вход</h1>
+	 <div style="padding:0 0 10px 30px; ">Схема подключение кнопки с подтягивающим резистором на 2kOm.</div>
+	 <img src="029-1-ru.png" style="padding:0 0 10px 30px;">
+	 <div style="padding:0 0 10px 30px; ">Блок Цифровой вход Pin 2.</div>
+	 <img src="029-2-ru.png" style="padding:0 0 10px 30px;">
+ 	 <div style="padding:0 0 10px 30px; ">Отправим значение цифрового pin 2 в Монитор порта.</div>
+	 <img src="029-3-ru.png" style="padding:0 0 10px 30px;">
+	 
+</div>
+	
+<script>
+	var { ipcRenderer } = require("electron") ;
+	var input = document.getElementById("var_name") ;
+	input.addEventListener("keyup", function(event) {
+		if (event.keyCode === 13) document.getElementById("btn_variable").click()
+	})
+	function cancel() {
+		ipcRenderer.send("closeDialog", "") ;
+		this.close()
+	}
+	function response() {
+		ipcRenderer.send("closeDialog", document.getElementById("var_name").value) ;
+		this.close()
+	}
+	window.onload=function() {
+		document.getElementById("var_name").focus() ;
+		var options = ipcRenderer.sendSync("openDialog", "") ;
+		var params = JSON.parse(options) ;
+		document.getElementById("title").innerHTML = params.label ;
+		document.getElementById("var_name").value = params.value ;
+		document.getElementById("btn_variable").innerText = params.ok 
+	}
+</script>
+</body>
+</html>

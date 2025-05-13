@@ -1,0 +1,25 @@
+[
+{"source_url": "001.ardublock","source_text": "001 - Flashing LED. | Маячок, мигающий светодиод.","visible": true},    
+{"source_url": "002.ardublock","source_text": "002 - Railway traffic light. | Железнодорожный светофор.","visible": true},
+{"source_url": "003.ardublock","source_text": "003 - Beacon with increasing brightness. | Маячок с нарастающей яркостью.","visible": true}, 
+{"source_url": "004.ardublock","source_text": "004 - Lamp with adjustable brightness. | Светильник с управляемой яркостью.","visible": true},
+{"source_url": "005.ardublock","source_text": "005 - Audio frequency generator. | Генератор звуковой частоты.","visible": true},
+{"source_url": "006.ardublock","source_text": "006 - Musical instrument. | Музыкальный инструмент.","visible": true}, 
+{"source_url": "007.ardublock","source_text": "007 - Night light. | Ночной светильник.","visible": true},
+{"source_url": "008.ardublock","source_text": "008 - Pulsar. | Пульсар.","visible": true},
+{"source_url": "009.ardublock","source_text": "009 - Running light. | Бегущий огонёк.","visible": true}, 
+{"source_url": "010.ardublock","source_text": "010 - Call. | Звонок.","visible": true},
+{"source_url": "011.ardublock","source_text": "011 - Piano. | Пианино.","visible": true},    
+{"source_url": "012.ardublock","source_text": "012 - Push button switch. | Кнопочный выключатель.","visible": true},
+{"source_url": "013.ardublock","source_text": "013 - One push-button.. | Кнопочный переключатель.","visible": true}, 
+{"source_url": "014.ardublock","source_text": "014 - Mixer. | Миксер.","visible": true},
+{"source_url": "015.ardublock","source_text": "015 - Engine speed regulator. | Регулятор оборотов двигателя.","visible": true},
+{"source_url": "016.ardublock","source_text": "016 - Clap lamp. | Хлопковый светильник.","visible": true}, 
+{"source_url": "017.ardublock","source_text": "017 - Seconds up to 10. | Секундометр до 10.","visible": true},
+{"source_url": "018.ardublock","source_text": "018 - Click counter. | Счётчик нажатий.","visible": true},
+{"source_url": "019.ardublock","source_text": "019 - Control the servomotor. | Управляй сервомотором.","visible": true}, 
+{"source_url": "020.ardublock","source_text": "020 - Pantograph. | Пантограф.","visible": true},
+ {}
+   ]
+   
+ 
