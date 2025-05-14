@@ -156,4 +156,44 @@ class SerialMonitor {
 // Initialize the serial monitor when the page loads
 window.addEventListener('load', () => {
     new SerialMonitor();
+});
+
+// Загрузка прошивки на Arduino через Web Serial API
+async function uploadHexToArduino() {
+    console.log('uploadHexToArduino called');
+    try {
+        // Получаем выбранный порт
+        const port = await navigator.serial.requestPort();
+        console.log('Port requested:', port);
+        await port.open({ baudRate: 115200 }); // 115200 для Arduino Uno/Nano/Mega
+        console.log('Port opened');
+
+        // Загружаем hex-файл
+        const response = await fetch('firmware.hex');
+        console.log('firmware.hex fetch response:', response);
+        if (!response.ok) throw new Error('Не удалось загрузить firmware.hex');
+        const hexText = await response.text();
+        console.log('firmware.hex loaded, length:', hexText.length);
+
+        // Преобразуем hex в байты (Intel HEX -> бинарник)
+        // Здесь нужен парсер Intel HEX, например, intel-hex.browser.js
+        // Для теста отправим как есть (но это не прошьёт Arduino стандартным загрузчиком!)
+        const writer = port.writable.getWriter();
+        const encoder = new TextEncoder();
+        await writer.write(encoder.encode(hexText));
+        console.log('HEX sent to port');
+        await writer.close();
+        await port.close();
+        alert('HEX отправлен на порт! (но для реальной прошивки нужен загрузчик типа avrdude)');
+    } catch (e) {
+        console.error('Ошибка загрузки:', e);
+        alert('Ошибка загрузки: ' + e.message);
+    }
+}
+
+document.getElementById('btn_verify').addEventListener('click', function(event) {
+    console.log('btn_verify click handler called');
+    event.preventDefault();
+    event.stopPropagation();
+    uploadHexToArduino();
 }); 
