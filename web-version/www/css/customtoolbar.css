@@ -1,0 +1,22 @@
+.toolbar{
+  display:flex;
+  align-items:center;
+  gap:.25rem;
+  height:37px;                         /* ровно как у остальных иконок */
+  padding:0 .5rem;
+  background:#002549;                  /* тот самый тёмно-синий */
+}
+
+.tb-btn{
+  all:unset;                           /* убираем системный стиль <button> */
+  justify-content:center;
+  height:100%;
+  padding:0 .9rem;                     /* визуально ширина как квадрат-иконка */
+  color:#fff;
+  font:14px/1 Arial, sans-serif;
+  cursor:pointer;
+  user-select:none;
+}
+
+.tb-btn:hover  { background:rgba(255,255,255,.08); }
+.tb-btn:active { background:rgba(255,255,255,.18); }

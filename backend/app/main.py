@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.responses import FileResponse
 import asyncio, os, tempfile, pathlib, shutil, subprocess
 import datetime
+from fastapi.middleware.cors import CORSMiddleware
 
 FQBN_DEFAULT = "arduino:avr:uno"
 TIMEOUT = 60          # сек
@@ -9,6 +10,14 @@ app = FastAPI(
     title="Arduino Compiler API",
     description="API для загрузки Arduino-скетча (.ino), компиляции его с помощью arduino-cli и получения скомпилированного .hex файла.",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # или ["*"] для всех
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.post("/compile/", response_class=FileResponse, summary="Компиляция Arduino-скетча", response_description="HEX-файл прошивки")
@@ -48,7 +57,7 @@ async def compile_arduino_code(
         # Компиляция
         proc = await asyncio.create_subprocess_exec(
             "arduino-cli", "compile",
-            "--fqbn", fqbn,
+            "--fqbn", FQBN_DEFAULT,    #fqbn,     # ПОКА ДЕФОЛТНО НА АРДУИНО УНО КОМПИЛЯЦИЮ ДЕЛАЕМ
             "--output-dir", str(sketch_dir),
             str(sketch_dir),
             stdout=asyncio.subprocess.PIPE,

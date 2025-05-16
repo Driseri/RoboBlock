@@ -34,11 +34,13 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/hotkeys/3.10.1/hotkeys.min.js"></script>
 	<script type="text/javascript" src="js/hotkeys.js"></script>
+	<script src="https://github.com/dbuezas/arduino-web-uploader/releases/download/v1.1.2/main.js"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.3.3.6.css"/>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.toggle.min.css"/>
 	<link rel="stylesheet" type="text/css" href="css/blocklino.css"/>
 	<link rel="stylesheet" type="text/css" href="css/prettify.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/customtoolbar.css"/>
   
 </head>
  <style>
@@ -220,15 +222,26 @@ setTimeout(function() {
 </select>
 				
 				 
-		 
-<select id="portserie" class="ard2" style="margin:3px;height:26px;outline:none;">
+		 <!-- Кнопки компиляции  -->
+ <!--<select id="portserie" class="ard2" style="margin:3px;height:26px;outline:none;" >
 	<option value="">Select port</option>
-</select>
-<button id="requestPortBtn" class="ard2" style="margin:3px;height:26px;outline:none;background-color:#001e36;color:#fff;border:1px solid #001e36;">Загрузить на плату</button>
+</select> -->
+	<button id="btn_compile" class="tb-btn">Компилировать код</button>
+
+	<button
+	arduino-uploader
+	hex-href=""
+	board="uno"
+	[optional]verify
+	class="tb-btn"
+	>
+	> Загрузка на плату
+	<span class="upload-progress"></span>
+	</button>
 				</td>
 <td style="width:150px; text-align:right;" >	
 			
-				 <button class="b06" id="btn_verify"><!--проверка --></button> 
+				 <!-- <button class="b06" id="btn_verify">проверка</button>  -->
 				
 				
 			<!--<button class="b06" id="btn_flash"   data-toggle="modal" data-target="#message">Загрузить</button>-->
@@ -523,7 +536,7 @@ setTimeout(function() {
 			});
 		});
 	</script>
-	
+
 </body>
 <script type="text/javascript">	
 	$(window).load(function(){$(".loading").fadeOut("slow")});

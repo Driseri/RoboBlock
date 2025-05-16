@@ -371,7 +371,162 @@ BlocklyDuino.Redo = function() {
 BlocklyDuino.search = function() {
 	editor.execCommand("find")
 };
+
+/* ------------------------------------------------------------------
+ *  Отправляет рабочий скетч POST-запросом
+ *  url       – конечная точка вашего API
+ *  extraData – любые дополнительные поля (board, userId …)
+ * -----------------------------------------------------------------*/
+BlocklyDuino.postCode = function (url, extraData = {}) {
+  // 1. Берём свежий код
+  const code = (window.localStorage.prog !== 'python')
+    ? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
+    : Blockly.Python.workspaceToCode(BlocklyDuino.workspace);
+
+  // 2. Собираем JSON-объект
+  const payload = Object.assign(
+    {
+      code,                       // сам текст программы
+      board: $("#boards").val(),  // пример: модель платы
+      timestamp: Date.now()
+    },
+    extraData                     // переопределяем/добавляем, если нужно
+  );
+
+  // 3. Отправляем
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+};
+/* Формирует полный URL GET-запроса
+ *   baseUrl    – «https://api.example.com/compile»
+ *   extraData  – {userId: 42}  // необязательные доп.поля
+ *
+ * КОД шифруем Base64 → короче и безопасно для URL.
+ */
+BlocklyDuino.buildGetUrl = function (baseUrl, extraData = {}) {
+  const code = (window.localStorage.prog !== 'python')
+    ? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
+    : Blockly.Python.workspaceToCode(BlocklyDuino.workspace);
+
+  const params = Object.assign({
+      code: btoa(unescape(encodeURIComponent(code))),   // → base64
+      board: $('#boards').val(),
+      ts: Date.now()
+  }, extraData);
+
+  const qs = new URLSearchParams(params).toString();
+  return `${baseUrl}?${qs}`;
+};
+
+/* ────────────────────────────────────────────── *
+ * 1. Делает временный «файл» из текущего кода
+ *    → возвращает {file, filename}
+ * ────────────────────────────────────────────── */
+BlocklyDuino.getTempSourceFile = function () {
+  const code = (localStorage.prog !== 'python')
+    ? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
+    : Blockly.Python.workspaceToCode(BlocklyDuino.workspace);
+
+  const ext  = (localStorage.prog !== 'python') ? '.ino' : '.py';
+  const name = 'source_' + Date.now() + ext;
+
+  return {                       // Blob превращаем в File
+    file: new File([code], name, {type: 'text/plain'}),
+    filename: name
+  };
+};
+
+/**
+ *  BlocklyDuino.compileOnServer
+ *  ─────────────────────────────────────────
+ *  1. Берёт актуальный скетч → File
+ *  2. FormData { file, fqbn }
+ *  3. POST https://…/compile/
+ *  4. Получает .hex, сохраняет и кэширует ссылку
+ */
+BlocklyDuino.compileOnServer = async function ({
+  apiUrl        = "https://api.example.com/compile/",   // ваш host
+  fqbn          = "arduino:avr:uno",                    // плата по умолчанию
+  boardToFqbn   = {}                                    // map id → fqbn
+} = {}) {
+
+  /* 1. формируем исходник как File ----------------------- */
+  const code   = (localStorage.prog !== "python")
+               ? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
+               : Blockly.Python.workspaceToCode(BlocklyDuino.workspace);
+
+  const srcFile = new File(
+    [code],
+    "sketch_" + Date.now() + ".ino",
+    {type: "text/plain"}
+  );
+
+  /* 2. уточняем fqbn для выбранной пользователем платы ----- */
+  const boardId = $("#boards").val();                // например "nano" или "uno"
+  if (boardToFqbn[boardId]) fqbn = boardToFqbn[boardId];
+
+  /* 3. собираем multipart/form-data ----------------------- */
+  const form = new FormData();
+  form.append("file", srcFile);     // ключ должен называться exactly file
+  form.append("fqbn", fqbn);        // в теле; можно и query-параметром
+
+  /* 4. шлём ------------------------------------------------ */
+  const resp = await fetch(apiUrl, {method: "POST", body: form});
+  if (!resp.ok) throw new Error(resp.status + " " + resp.statusText);
+
+  /* 5. вытаскиваем .hex  ---------------------------------- */
+  const blob     = await resp.blob();                     // FileResponse
+  const hexFile  = new File([blob], "firmware.hex", {type: blob.type});
+
+  // сохраняем на диск
+  saveAs(hexFile);
+
+  // выдаём URL для дальнейшей прошивки
+  const url = URL.createObjectURL(hexFile);
+  localStorage.lastBuildUrl  = url;
+  localStorage.lastBuildName = hexFile.name;
+
+  return {url, file: hexFile};
+};
+
 BlocklyDuino.bindFunctions = function() {
+	$('#btn_compile').on('click', async function () {
+	const $btn = $(this).prop('disabled', true).addClass('sending');
+	const boardToFqbn = {
+		nano:  "arduino:avr:nano",
+		uno:   "arduino:avr:uno",
+		mega:  "arduino:avr:mega",
+		pro16: "arduino:avr:pro:cpu=16MHzatmega328",
+		esp32: "esp32:esp32:esp32",
+		// …добавляйте остальные
+	};
+
+	try {
+		await BlocklyDuino.compileOnServer({
+		apiUrl: "http://localhost:8000/compile/",
+		boardToFqbn
+		});
+
+		// 👉 подключаем .hex к кнопке загрузки
+    	document.querySelector('[arduino-uploader]').setAttribute('hex-href', localStorage.lastBuildUrl);
+		alert("✔ Файл firmware.hex скачан. Его же можно найти в localStorage.lastBuildUrl");
+	} catch (e) {
+		console.error(e);
+		alert("Ошибка компиляции: " + e.message);
+	} finally {
+		$btn.prop('disabled', false).removeClass('sending');
+	}
+	});
+	$('#btn_log').on('click', function () {
+	const code = (window.localStorage.prog !== 'python')
+		? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
+		: Blockly.Python.workspaceToCode(BlocklyDuino.workspace);
+		// console.clear();
+		console.log('===== Generated code =====\n' + code);
+	});
 	$('.modal-child').on('show.bs.modal', function () {
 		var modalParent = $(this).attr('data-modal-parent');
 		$(modalParent).css('opacity', 0)
