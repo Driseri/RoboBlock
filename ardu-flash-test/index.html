@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Arduino HEX uploader – demo</title>
+  <style>
+    body{font-family:sans-serif;max-width:600px;margin:2rem auto;padding:0 1rem}
+    button{font-size:1rem;padding:.6rem 1rem;cursor:pointer}
+    .upload-progress{margin-left:.5rem;font-weight:bold}
+    #log{white-space:pre;border:1px solid #ccc;background:#fafafa;
+         padding:.6rem;height:180px;overflow:auto;margin-top:1rem;font:90%/1.4 monospace}
+  </style>
+  <!-- библиотека 1.0.0 из GitHub Releases -->
+  <script src="https://github.com/dbuezas/arduino-web-uploader/releases/download/v1.1.2/main.js"></script>
+
+</head>
+<body>
+
+<h2>Прошивка Arduino через браузер (Web Serial)</h2>
+
+<p>
+  <button
+  arduino-uploader
+  hex-href="del3.hex"
+  board="uno"
+  [optional]verify
+>
+  > Загрузка на плату
+  <span class="upload-progress"></span>
+  </button>
+</p>
+
+<div id="log"></div>
+
+
+<script>
+/* ---- Простой вывод лога процесса ---- */
+const logBox = document.getElementById('log');
+function log(line){
+  logBox.textContent += line + '\n';
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+/* находим кнопку и подписываемся на события библиотеки */
+const btn = document.getElementById('flashBtn');
+
+btn.addEventListener('arduino-upload-start', () => {
+  log('\n—----- START UPLOAD -----—');
+});
+btn.addEventListener('arduino-upload-progress', e => {
+  const pct = e.detail.percent;
+  btn.querySelector('.upload-progress').textContent = `${pct}%`;
+  if (pct % 10 === 0) log(`Progress: ${pct}%`);
+});
+btn.addEventListener('arduino-upload-done', () => {
+  btn.querySelector('.upload-progress').textContent = '';
+  log('✓ Прошивка завершена!');
+});
+btn.addEventListener('arduino-upload-error', e => {
+  btn.querySelector('.upload-progress').textContent = '';
+  log('✗ Ошибка: ' + e.detail.message);
+});
+</script>
+
+</body>
+</html>
