@@ -10,6 +10,12 @@ BlocklyDuino.init = function() {
 	Code.initLanguage();
 	BlocklyDuino.loadConfig();
 	BlocklyDuino.workspace = Blockly.inject('content_blocks',{grid:{snap:true},sounds:true,media:'media/',toolbox:BlocklyDuino.buildToolbox(),zoom:{controls:true,wheel:true}});
+	BlocklyDuino.workspace.addChangeListener(function () {
+		const $btn = $('#btn_compile');
+		if ($btn.hasClass('btn-success')) {
+			$btn.removeClass('btn-success btn-danger');
+		}
+	});
 	BlocklyDuino.bindFunctions();
 	BlocklyDuino.workspace.render();
 	BlocklyDuino.workspace.addChangeListener(BlocklyDuino.renderArduinoCodePreview);
@@ -448,11 +454,13 @@ BlocklyDuino.getTempSourceFile = function () {
  *  4. Получает .hex, сохраняет и кэширует ссылку
  */
 BlocklyDuino.compileOnServer = async function ({
-  apiUrl        = "https://api.example.com/compile/",   // ваш host
+  apiUrl        = "https://robobocodecompiler-robobo.amvera.io/compile/",   // ваш host
   fqbn          = "arduino:avr:uno",                    // плата по умолчанию
   boardToFqbn   = {}                                    // map id → fqbn
 } = {}) {
 
+  const boardValue = document.getElementById('boards').value;
+  const fqbnn = boardToFqbn[boardValue] || "arduino:avr:uno";
   /* 1. формируем исходник как File ----------------------- */
   const code   = (localStorage.prog !== "python")
                ? Blockly.Arduino.workspaceToCode(BlocklyDuino.workspace)
@@ -464,14 +472,14 @@ BlocklyDuino.compileOnServer = async function ({
     {type: "text/plain"}
   );
 
-  /* 2. уточняем fqbn для выбранной пользователем платы ----- */
-  const boardId = $("#boards").val();                // например "nano" или "uno"
-  if (boardToFqbn[boardId]) fqbn = boardToFqbn[boardId];
+//   /* 2. уточняем fqbn для выбранной пользователем платы ----- */
+//   const boardId = $("#boards").val();                // например "nano" или "uno"
+//   if (boardToFqbn[boardId]) fqbn = boardToFqbn[boardId];
 
   /* 3. собираем multipart/form-data ----------------------- */
   const form = new FormData();
   form.append("file", srcFile);     // ключ должен называться exactly file
-  form.append("fqbn", fqbn);        // в теле; можно и query-параметром
+  form.append("fqbn", fqbnn);        // в теле; можно и query-параметром
 
   /* 4. шлём ------------------------------------------------ */
   const resp = await fetch(apiUrl, {method: "POST", body: form});
@@ -482,7 +490,7 @@ BlocklyDuino.compileOnServer = async function ({
   const hexFile  = new File([blob], "firmware.hex", {type: blob.type});
 
   // сохраняем на диск
-  saveAs(hexFile);
+  //saveAs(hexFile);
 
   // выдаём URL для дальнейшей прошивки
   const url = URL.createObjectURL(hexFile);
@@ -490,6 +498,26 @@ BlocklyDuino.compileOnServer = async function ({
   localStorage.lastBuildName = hexFile.name;
 
   return {url, file: hexFile};
+};
+
+function boardToFqbn(boardValue) {
+	const map = {
+		"uno": "arduino:avr:uno",
+		"nano": "arduino:avr:nano",
+		"nanooptiboot": "arduino:avr:nano",
+		"mega": "arduino:avr:mega",
+		"leo32u4": "arduino:avr:leonardo",
+		"esp32": "esp32:esp32:esp32",
+		"esp826601": "esp8266:esp8266:generic",
+		"esp826612": "esp8266:esp8266:nodemcuv2",
+		"mik32": "mik32:board:base",
+		"mik32_16": "mik32:board:base16mb",
+		"mik32_32": "mik32:board:base32mb",
+		"stm32duino": "STMicroelectronics:stm32:GenF1",
+		"sandeepmistry": "arduino:mbed:nano33ble"
+	};
+
+	return map[boardValue] || "arduino:avr:uno";
 };
 
 BlocklyDuino.bindFunctions = function() {
@@ -506,15 +534,19 @@ BlocklyDuino.bindFunctions = function() {
 
 	try {
 		await BlocklyDuino.compileOnServer({
-		apiUrl: "http://localhost:8000/compile/",
+		apiUrl: "https://robobocodecompiler-robobo.amvera.io/compile/",
 		boardToFqbn
 		});
 
+		//  Сделать кнопку зелёной
+		$btn.removeClass('btn-danger').addClass('btn-success');
+
 		// 👉 подключаем .hex к кнопке загрузки
     	document.querySelector('[arduino-uploader]').setAttribute('hex-href', localStorage.lastBuildUrl);
-		alert("✔ Файл firmware.hex скачан. Его же можно найти в localStorage.lastBuildUrl");
+		alert("✅ Компиляция прошла успешно. Можно загружать на плату!");
 	} catch (e) {
 		console.error(e);
+		$btn.removeClass('btn-success').addClass('btn-danger');
 		alert("Ошибка компиляции: " + e.message);
 	} finally {
 		$btn.prop('disabled', false).removeClass('sending');
